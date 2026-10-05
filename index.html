@@ -1,63 +1,183 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Localisation</title>
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyzp5OBxiya8wyAF-miJ5pzz29hzHCtcFDNDpTj77gm7DSU6UUYLO0jGFLvc3C98C_l/exec";
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DATA CENTER MOOV - État des onduleurs</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b1f3a;--bg:#f2f5f9;--card:#fff;--ink:#0f1b2d;--mut:#5b6b80;--line:#e3e9f0;--ok:#0f9d58;--okbg:#e6f6ee;--ko:#d93025;--kobg:#fdeceb;--wa:#d97706;--wabg:#fef3e0;--un:#94a3b8;--unbg:#eef1f5;--of:#334155;--ofbg:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.nav{background:var(--navy);color:#fff}.nav .in{max-width:1100px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:14px}
+.logo{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#16a34a);display:grid;place-items:center;flex:none}
+.nav b{display:block;font-size:16px;font-weight:800;letter-spacing:.05em;line-height:1.15}.nav .s{font-size:12px;color:#9fb4cc}
+.r{margin-left:auto;text-align:right;font-size:12.5px;color:#9fb4cc;line-height:1.35}.r .l{display:flex;align-items:center;justify-content:flex-end;gap:7px;color:#fff;font-weight:600}
+.gear{flex:none;background:#ffffff1a;border:1px solid #ffffff33;color:#fff;border-radius:10px;width:40px;height:40px;font-size:19px;cursor:pointer}.gear:hover{background:#ffffff30}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--un)}.dot.on{background:#22c55e;animation:pl 2s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 #22c55e99}70%,100%{box-shadow:0 0 0 8px #0000}}
+.wrap{max-width:1100px;margin:auto;padding:24px 24px 30px}
+.ok{--col:var(--ok);--bg2:var(--okbg)}.ko{--col:var(--ko);--bg2:var(--kobg)}.wa,.vf{--col:var(--wa);--bg2:var(--wabg)}.un{--col:var(--un);--bg2:var(--unbg)}.of{--col:var(--of);--bg2:var(--ofbg)}
+.bn{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--line);border-left:8px solid var(--col);border-radius:14px;padding:26px 30px;box-shadow:0 1px 2px #0b1f3a0a,0 12px 32px -20px #0b1f3a50;transition:border-color .3s}
+.ic{width:62px;height:62px;border-radius:50%;background:var(--bg2);color:var(--col);display:grid;place-items:center;font-size:28px;font-weight:800;flex:none}
+.bn small{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--mut)}.bn h1{margin:3px 0;font-size:clamp(21px,3.6vw,31px);line-height:1.15;font-weight:800;letter-spacing:-.015em;color:var(--col)}.bn p{margin:0;color:var(--mut)}
+.bk{margin-left:auto;text-align:right;font-variant-numeric:tabular-nums;font-size:clamp(28px,4.4vw,44px);font-weight:800;color:var(--col);white-space:nowrap;line-height:1.1}.bk small{display:block;letter-spacing:0;font-size:12px;font-weight:600;color:var(--mut);margin-bottom:2px}
+h2{font-size:12.5px;font-weight:700;margin:30px 0 12px;letter-spacing:.12em;color:var(--mut);text-transform:uppercase}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.c{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--col);border-radius:12px;padding:20px 22px;box-shadow:0 1px 2px #0b1f3a08}.c.dim{opacity:.55}
+.c .h{display:flex;justify-content:space-between;align-items:center;gap:8px}.c .nm{font-weight:800;font-size:17px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:99px;font-size:12px;font-weight:700;background:var(--bg2);color:var(--col);white-space:nowrap}.pill:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.ok .pill:before,.ko .pill:before{animation:pl 2s infinite}
+.c .st{margin:18px 0 2px;font-size:12.5px;font-weight:700;color:var(--col);letter-spacing:.06em}.c .tm{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}.c .sub{color:var(--mut);font-size:13px}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--mut)}.f b{display:block;color:var(--ink);font-weight:600;font-size:13px}
+.e{background:var(--card);border:1px dashed #cdd6e2;border-radius:12px;padding:34px;text-align:center;color:var(--mut)}
+.tb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.tb select,.tb button,.dl input,.dl button{font:inherit;font-size:13.5px;padding:8px 12px;border:1px solid #cfd8e3;border-radius:9px;background:#fff;color:var(--ink)}
+.tb button,.dl button{font-weight:600;cursor:pointer}.dl button.p{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
+.sm{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 12px;color:var(--mut);font-size:13px}.sm b{color:var(--ink)}
+.tw{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}th,td{padding:10px 16px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}tr:last-child td{border:0}
+th{font-size:11.5px;letter-spacing:.08em;color:var(--mut);text-transform:uppercase;background:#f8fafc}
+.k{padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700}.k.b{background:var(--kobg);color:var(--ko)}.k.o{background:var(--ofbg);color:var(--of)}
+dialog{border:0;border-radius:14px;padding:0;max-width:500px;width:calc(100% - 32px);box-shadow:0 24px 60px -12px #0b1f3a80}dialog::backdrop{background:#0b1f3a88}
+.dl{padding:22px 24px}.dl h3{margin:0 0 4px;font-size:18px}.dl label{display:block;margin-top:16px;font-weight:600;font-size:13.5px}.dl input{width:100%;margin-top:5px}
+.dl .h{display:block;color:var(--mut);font-size:12.5px;font-weight:400;margin-top:4px}.dl .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.dl .bt .p{flex:1}
+.dz{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}.dz b{color:var(--ko);font-size:13.5px}.dl button.dg{background:#fff;border-color:var(--ko);color:var(--ko);margin-top:10px}
+#smsg{margin-top:12px;font-size:13px;min-height:19px}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:6px 20px 34px}
+@media(max-width:640px){.bn{flex-wrap:wrap;padding:22px}.bk{margin:0;text-align:left}.r .u{display:none}}
+@media(prefers-reduced-motion:reduce){.dot.on,.ok .pill:before,.ko .pill:before{animation:none}}
+</style></head><body>
+<header class="nav"><div class="in"><div class="logo"><svg width="21" height="21" viewBox="0 0 24 24" fill="#fff"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
+<div><b>DATA CENTER MOOV</b><span class="s">Supervision des onduleurs</span></div>
+<div class="r"><div class="l"><i class="dot" id="dot"></i><span id="cn">Connexion...</span></div><div class="u" id="clk"></div></div>
+<button class="gear" id="gb" title="Paramètres" aria-label="Paramètres">⚙</button></div></header>
+<div class="wrap">
+<section class="bn un" id="bn"><div class="ic" id="bi">…</div><div><small>ÉTAT GÉNÉRAL</small><h1 id="bt">Connexion...</h1><p id="bp"></p></div><div class="bk" id="bk"></div></section>
+<h2>Onduleurs</h2><div class="grid" id="g"></div>
+<h2>Historique</h2>
+<div class="tb"><select id="hp"><option value="7">7 derniers jours</option><option value="30" selected>30 derniers jours</option><option value="90">90 derniers jours</option><option value="365">12 derniers mois</option></select>
+<select id="hd"><option value="">Tous les onduleurs</option></select><button id="hr">Actualiser</button></div>
+<div class="sm" id="hs"></div>
+<div id="hist"></div></div>
+<footer>Surveillance en temps réel. Un arrêt n'est confirmé qu'après le délai de vérification défini dans les paramètres.</footer>
 
-    async function sendLocation() {
-      try {
-        // 🔹 Récupère l'ID depuis l'URL (ex: ?id=1234)
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get("id") || "inconnu";
+<dialog id="dlg"><div class="dl"><h3>Paramètres</h3>
+<span class="h" style="margin:0">Enregistrés sur cet appareil (navigateur).</span>
+<label>Dépôt GitHub de l'historique<input id="sdb" type="text" placeholder="utilisateur/nom-du-depot" autocomplete="off"></label>
+<span class="h">Les onduleurs y enregistrent chaque coupure et chaque arrêt (leur jeton d'écriture se configure sur le module). Cette page ne fait que lire.</span>
+<label>Branche<input id="sbr" type="text" placeholder="main" autocomplete="off"></label>
+<label>Jeton de lecture (facultatif, dépôt privé uniquement)<input id="stk" type="password" placeholder="github_pat_..." autocomplete="off"></label>
+<span class="h">Utilisez un jeton « fine-grained » en lecture seule (Contents : Read) limité à ce dépôt. Jamais le jeton d'écriture.</span>
+<label>Délai de vérification avant d'annoncer un arrêt (secondes)<input id="scf" type="number" min="0" max="3600" step="10"></label>
+<div id="smsg"></div>
+<div class="bt"><button class="p" id="ss">Enregistrer</button><button id="st">Tester la connexion</button><button id="sc">Fermer</button></div>
+<div class="dz"><b>Suppression à distance</b>
+<span class="h">Efface du dépôt GitHub toutes les données envoyées par les onduleurs actuellement connectés. Le code de suppression défini sur chaque module est demandé. Action irréversible.</span>
+<button class="dg" id="sp">Supprimer toutes les données envoyées…</button></div></div></dialog>
 
-        // 🔹 Obtenir la position GPS
-        const position = await new Promise((resolve, reject) => {
-          if (!navigator.geolocation) {
-            reject(new Error("Géolocalisation non disponible."));
-          }
-          navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
+<script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
+<script>
+const CODE='datacenter-moov-k7x2q9';   // code du site (secret) : à garder identique côté module de mesure
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls=(k,v)=>{try{return v===undefined?JSON.parse(localStorage.getItem(k)||'null'):localStorage.setItem(k,JSON.stringify(v))}catch{return null}};
+let cfg=Object.assign({repo:'',br:'main',tok:'',cf:120},ls('cfg')||{});
+const D={};let mq=false,sig='',cl=null,H=null,herr='',ht=0;
+const CONFIRM=()=>Math.max(0,+cfg.cf||0)*1000;
+const hm=ms=>{const d=new Date(ms);return`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} à ${pad(d.getHours())}:${pad(d.getMinutes())}`};
+function hms(ms){ms=Math.max(0,Math.round(ms/1000));const d=Math.floor(ms/86400),h=Math.floor(ms%86400/3600);return(d?d+' j ':'')+`${pad(h)}:${pad(Math.floor(ms%3600/60))}:${pad(ms%60)}`}
+function dur(ms){let s=Math.max(0,Math.round(ms/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d?`${d} j ${h} h`:h?`${h} h ${m} min`:m?`${m} min`:`${s} s`}
+const offSince=d=>d.t||d.stAt, batSince=d=>d.bs||d.stT||d.stAt;
+/* ok = secteur · ko = batterie (broches 18/19 reliées) · of = ESP32 éteint · vf = arrêt à confirmer · wa = signal perdu */
+function state(d){if(!d.p)return'un';
+  if(d.p==='off')return Date.now()-offSince(d)>=CONFIRM()?'of':'vf';
+  if(Date.now()-(d.rx||d.stAt)>90000)return'wa';
+  return d.p==='bat'?'ko':'ok'}
+function conn(){if(!window.mqtt){$('#cn').textContent='Indisponible';return}
+  cl=mqtt.connect('wss://broker.hivemq.com:8884/mqtt',{reconnectPeriod:3000,clientId:'web-'+Math.random().toString(16).slice(2,10)});
+  cl.on('connect',()=>{mq=true;cl.subscribe(`powerwatch/${CODE}/+/+`);render()});cl.on('close',()=>{mq=false;render()});
+  cl.on('message',(t,m)=>{let j;try{j=JSON.parse(m.toString())}catch{return}const[,,id,k]=t.split('/');
+    if(!/^[\w-]+$/.test(id||'')||(k!=='status'&&k!=='info'))return;const d=D[id]=D[id]||{id};
+    if(k==='status'){d.p=['sec','bat','off'].includes(j.p)?j.p:'sec';if(j.n)d.n=String(j.n).slice(0,40);d.stT=j.t?j.t*1000:0;d.stAt=Date.now()}
+    else Object.assign(d,{t:j.t?j.t*1000:0,up:+j.up||0,ip:String(j.ip||''),bs:j.bs?j.bs*1000:0,db:+j.db||0,q:+j.q||0,pg:+j.pg||0,pp:+j.pp||0,rx:Date.now()});
+    setTimeout(render,300)})}
+const TXT={ok:'SUR SECTEUR',ko:'SUR BATTERIE',of:'SYSTÈME ÉTEINT',vf:'VÉRIFICATION EN COURS',wa:'SIGNAL PERDU',un:'EN ATTENTE'},PIL={ok:'Secteur',ko:'Batterie',of:'Éteint',vf:'Vérification',wa:'Signal perdu',un:'Inconnu'};
+const PG={1:'Suppression en cours...',2:'Données supprimées',3:'Échec de la suppression'};
+function render(){const ds=Object.values(D).sort((a,b)=>(a.n||a.id).localeCompare(b.n||b.id)),now=Date.now(),S=ds.map(state),nm=d=>esc(d.n||d.id),by=k=>ds.filter((d,i)=>S[i]===k);
+  let c='un',ic='…',t='En attente des données',p='Aucun onduleur détecté pour le moment.',bk='';
+  if(!mq&&!ds.length){t='Connexion au temps réel...';p=''}
+  else if(by('ko').length){c='ko';ic='⚡';const o=Math.min(...by('ko').map(batSince));t='Onduleur sur batterie : '+by('ko').map(nm).join(', ');p='Coupure du secteur. Début le '+hm(o)+'.';bk=`<small>Durée sur batterie</small><span data-s="${o}">${hms(now-o)}</span>`}
+  else if(by('of').length){c='of';ic='⏻';const o=Math.min(...by('of').map(offSince));t='Système éteint : '+by('of').map(nm).join(', ');p='Plus aucun signal depuis le '+hm(o)+'.';bk=`<small>Durée de l'arrêt</small><span data-s="${o}">${hms(now-o)}</span>`}
+  else if(by('vf').length){c='wa';ic='…';const o=Math.min(...by('vf').map(offSince));t='Vérification en cours : '+by('vf').map(nm).join(', ');p='Perte de signal détectée. Confirmation de l\'arrêt dans quelques instants.';bk=`<small>Confirmation dans</small><span data-c="${o+CONFIRM()}">--:--</span>`}
+  else if(by('wa').length){c='wa';ic='!';t='Signal perdu : '+by('wa').map(nm).join(', ');p='Aucune donnée reçue depuis plus de 90 secondes.'}
+  else if(ds.length){c='ok';ic='✓';t=ds.length>1?'Tous les onduleurs fonctionnent bien':'Onduleur fonctionne bien';p=ds.length>1?ds.length+' onduleurs sur secteur, alimentation normale.':'Alimentation normale (secteur).'}
+  if(ds.length&&!mq)p='Connexion perdue, reconnexion en cours...';
+  $('#bn').className='bn '+c;$('#bi').textContent=ic;$('#bt').innerHTML=t;$('#bp').textContent=p;$('#bk').innerHTML=bk;
+  $('#dot').className='dot'+(mq?' on':'');$('#cn').textContent=mq?'Temps réel actif':'Reconnexion...';
+  document.title=(c==='ko'?'🔴 ':c==='of'?'⚫ ':c==='wa'?'🟠 ':'')+'DATA CENTER MOOV - Onduleurs';
+  $('#g').innerHTML=ds.map((d,i)=>{const s=S[i],up=d.rx?dur(d.up*1000+now-d.rx):'-',bsn=batSince(d),osn=offSince(d);
+    const body=s==='ok'?'<div class="tm">Secteur</div><div class="sub">Alimentation normale</div>':
+      s==='ko'?`<div class="tm" data-s="${bsn}">${hms(now-bsn)}</div><div class="sub">sur batterie depuis le ${hm(bsn)}</div>`:
+      s==='of'?`<div class="tm" data-s="${osn}">${hms(now-osn)}</div><div class="sub">éteint depuis le ${hm(osn)}</div>`:
+      s==='vf'?`<div class="tm" data-c="${osn+CONFIRM()}">--:--</div><div class="sub">avant confirmation de l'arrêt</div>`:
+      s==='wa'?`<div class="tm">?</div><div class="sub">dernière donnée il y a ${dur(now-(d.rx||d.stAt))}</div>`:'';
+    const hs=s==='of'||s==='vf'?'-':d.pg?PG[d.pg]:d.db?(d.q?d.q+' en attente':'À jour'):'Non configuré';
+    return`<article class="c ${s}${mq?'':' dim'}"><div class="h"><span class="nm">${nm(d)}</span><span class="pill">${PIL[s]}</span></div><div class="st">${TXT[s]}</div>${body}
+    <div class="f"><div>Identifiant<b>${esc(d.id)}</b></div><div>En service depuis<b>${s==='ok'||s==='ko'?up:'-'}</b></div><div>Historique en ligne<b>${hs}</b></div></div></article>`}).join('')||'<div class="e">Aucun onduleur détecté pour le moment.</div>'}
 
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+/* ---------- Historique en ligne (GitHub) : data/<code>/<AAAA-MM>.jsonl, une ligne JSON par événement ---------- */
+function monthsFor(days){const out=[],n=new Date();let y=n.getUTCFullYear(),m=n.getUTCMonth();const cnt=Math.ceil(days/30)+1;
+  for(let i=0;i<cnt;i++){out.push(`${y}-${pad(m+1)}`);m--;if(m<0){m=11;y--}}return out}
+async function getMonth(mo){const p=`data/${CODE}/${mo}.jsonl`,br=encodeURIComponent(cfg.br||'main');let r;
+  if(cfg.tok)r=await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${p}?ref=${br}`,{headers:{Authorization:'Bearer '+cfg.tok,Accept:'application/vnd.github.raw+json'}});
+  else r=await fetch(`https://raw.githubusercontent.com/${cfg.repo}/${br}/${p}?t=${Math.floor(Date.now()/30000)}`);
+  if(r.status===404)return'';if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}
+async function loadHist(){if(!cfg.repo){H=null;herr='';return renderHist()}
+  try{const days=+$('#hp').value||30,txt=await Promise.all(monthsFor(days).map(getMonth));H=[];
+    for(const t of txt)for(const ln of t.split('\n')){if(!ln.trim())continue;try{const v=JSON.parse(ln);if(v&&v.s&&v.i)H.push({id:v.i,...v})}catch{}}
+    H.sort((a,b)=>b.s-a.s);herr=''}
+  catch(e){herr=e.message||'erreur réseau';H=null}renderHist()}
+function renderHist(){const el=$('#hist'),sm=$('#hs');sm.innerHTML='';
+  if(!cfg.repo){el.innerHTML='<div class="e">Historique non configuré. Ouvrez les paramètres (⚙) et indiquez le dépôt GitHub.</div>';return}
+  if(!H){el.innerHTML='<div class="e">'+(herr?'Impossible de lire l\'historique ('+esc(herr)+').':'Chargement...')+'</div>';return}
+  const sel=$('#hd'),cur=sel.value,ids=[...new Set(H.map(v=>v.id))],names={};H.slice().reverse().forEach(v=>names[v.id]=v.n);ids.forEach(i=>{if(D[i]&&D[i].n)names[i]=D[i].n});
+  const key=ids.join();if(sel.dataset.k!==key){sel.dataset.k=key;sel.innerHTML='<option value="">Tous les onduleurs</option>'+ids.map(i=>`<option value="${esc(i)}">${esc(names[i]||i)}</option>`).join('');sel.value=ids.includes(cur)?cur:''}
+  const days=+$('#hp').value,dv=sel.value,now=Date.now(),min=days?now-days*864e5:0;
+  const rows=H.filter(v=>(!dv||v.id===dv)&&v.s*1000>=min),len=v=>(v.e?v.e*1000:now)-v.s*1000,sum=k=>rows.filter(v=>v.k===k).reduce((a,v)=>a+len(v),0),cnt=k=>rows.filter(v=>v.k===k).length;
+  sm.innerHTML=`<span>Coupures sur batterie : <b>${cnt('b')}</b> (${dur(sum('b'))})</span><span>Arrêts : <b>${cnt('o')}</b> (${dur(sum('o'))})</span>`;
+  if(!rows.length){el.innerHTML='<div class="e">Aucun événement sur cette période.'+(cfg.tok?'':'<br><small>Si le dépôt est privé, renseignez un jeton de lecture dans les paramètres.</small>')+'</div>';return}
+  el.innerHTML='<div class="tw"><table><thead><tr><th>Type</th><th>Onduleur</th><th>Début</th><th>Fin</th><th>Durée</th></tr></thead><tbody>'+rows.slice(0,300).map(v=>
+    `<tr><td><span class="k ${v.k==='b'?'b':'o'}">${v.k==='b'?'Batterie':'Arrêt'}</span></td><td>${esc(names[v.id]||v.id)}</td><td>${hm(v.s*1000)}</td><td>${v.e?hm(v.e*1000)+(v.x?' (estimée)':''):'En cours'}</td><td>${dur(len(v))}</td></tr>`).join('')+'</tbody></table></div>'}
 
-        // 🔹 Envoi via POST avec ID dynamique
-        await fetch(scriptURL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: `id=${encodeURIComponent(id)}&latitude=${latitude}&longitude=${longitude}`
-        });
+/* ---------- Paramètres ---------- */
+const msg=(t,ok)=>{const e=$('#smsg');e.textContent=t;e.style.color=ok?'var(--ok)':'var(--ko)'};
+const normRepo=u=>String(u||'').trim().replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'').replace(/^\/+|\/+$/g,'');
+const okRepo=u=>/^[\w.-]+\/[\w.-]+$/.test(u);
+$('#gb').onclick=()=>{$('#sdb').value=cfg.repo;$('#sbr').value=cfg.br;$('#stk').value=cfg.tok;$('#scf').value=cfg.cf;msg('');$('#dlg').showModal()};
+$('#sc').onclick=()=>$('#dlg').close();
+$('#st').onclick=async()=>{const u=normRepo($('#sdb').value),t=$('#stk').value.trim();if(!okRepo(u))return msg('Dépôt invalide : format attendu utilisateur/nom-du-depot');
+  msg('Test en cours...',1);try{const r=await fetch('https://api.github.com/repos/'+u,{headers:t?{Authorization:'Bearer '+t}:{}});
+    if(r.status===404)throw new Error('dépôt introuvable ou privé (renseignez un jeton de lecture)');if(!r.ok)throw new Error('HTTP '+r.status);msg('Connexion réussie.',1)}catch(e){msg('Échec : '+(e.message||'erreur réseau'))}};
+$('#ss').onclick=()=>{const u=normRepo($('#sdb').value);if(u&&!okRepo(u))return msg('Dépôt invalide : format attendu utilisateur/nom-du-depot');
+  cfg={repo:u,br:$('#sbr').value.trim()||'main',tok:$('#stk').value.trim(),cf:Math.min(3600,Math.max(0,parseInt($('#scf').value)||0))};ls('cfg',cfg);
+  msg('Paramètres enregistrés.',1);H=null;sig='';loadHist();render()};
+$('#hp').onchange=loadHist;$('#hd').onchange=renderHist;$('#hr').onclick=loadHist;
 
-        // 🔹 Récupération de l’URL de redirection
-        const urlResp = await fetch(`${scriptURL}?data=url`);
-        const urlText = await urlResp.text();
+/* ---------- Suppression à distance : commande signée (HMAC-SHA256) avec le code de suppression du module ---------- */
+async function hmacHex(key,m){const enc=new TextEncoder(),k=await crypto.subtle.importKey('raw',enc.encode(key),{name:'HMAC',hash:'SHA-256'},false,['sign']);
+  return[...new Uint8Array(await crypto.subtle.sign('HMAC',k,enc.encode(m)))].map(b=>b.toString(16).padStart(2,'0')).join('')}
+const devTime=d=>Math.floor((d.t?d.t+(Date.now()-d.rx):Date.now())/1000);   // heure du module (évite tout écart d'horloge)
+$('#sp').onclick=async()=>{
+  if(!cl||!mq)return msg('Pas de connexion temps réel : impossible d\'envoyer la commande.');
+  if(!window.crypto||!crypto.subtle)return msg('Fonction indisponible : ouvrez ce tableau de bord en HTTPS.');
+  const ds=Object.values(D).filter(d=>d.rx&&Date.now()-d.rx<90000&&d.db);
+  if(!ds.length)return msg('Aucun onduleur connecté avec l\'historique GitHub configuré.');
+  const nopin=ds.filter(d=>!d.pp).map(d=>d.n||d.id);
+  if(nopin.length===ds.length)return msg('Aucun module n\'a de code de suppression défini (page de configuration du module).');
+  if(!confirm('Supprimer définitivement TOUTES les données envoyées par '+ds.map(d=>d.n||d.id).join(', ')+' ?'))return;
+  const pin=prompt('Code de suppression :');if(!pin)return;
+  for(const d of ds)if(d.pp)cl.publish(`powerwatch/${CODE}/${d.id}/cmd`,JSON.stringify({c:'purge',t:devTime(d),h:await hmacHex(pin,`purge|${d.id}|${devTime(d)}`)}));
+  msg('Commande envoyée.'+(nopin.length?' Ignorés (pas de code défini) : '+nopin.join(', ')+'.':'')+' Si rien ne change, le code est incorrect. Suivi sur chaque carte.',1)};
 
-        // 🔹 Récupération du message vocal
-        const msgResp = await fetch(`${scriptURL}?data=message`);
-        const msgText = await msgResp.text();
-
-        // 🔊 Lecture
-        const utterance = new SpeechSynthesisUtterance(msgText);
-        speechSynthesis.speak(utterance);
-
-        // Redirection après 4 secondes
-        setTimeout(() => {
-          window.location.href = urlText.trim();
-        }, 4000);
-
-      } catch (error) {
-        alert("Erreur : " + error.message);
-      }
-    }
-
-    window.onload = sendLocation;
-  </script>
-</head>
-<body>
-  <h1> COMMANDE EN COURS </h1>
-</body>
-</html>
+function tick(){const s=Object.values(D).map(d=>d.id+state(d)+(d.n||'')+(d.db||0)+(d.q||0)+(d.pg||0)).join()+mq;if(s!==sig){sig=s;render();clearTimeout(ht);ht=setTimeout(loadHist,4000)}
+  const now=Date.now();document.querySelectorAll('[data-s]').forEach(e=>e.textContent=hms(now-e.dataset.s));document.querySelectorAll('[data-c]').forEach(e=>e.textContent=hms(e.dataset.c-now).slice(3));
+  $('#clk').textContent=new Date().toLocaleString('fr-FR',{dateStyle:'long',timeStyle:'medium'})}
+conn();render();loadHist();setInterval(tick,1000);setInterval(render,30000);setInterval(loadHist,60000);
+</script></body></html>
